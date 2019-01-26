@@ -12,16 +12,32 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-steps:
-- script: dotnet restore
-  displayName: 'Restore Packages'
+ssteps:
+- script: |
+    dotnet restore
+    dotnet build --configuration $(buildConfiguration) --no-restore
+    dotnet test AzureDemo.Tests/AzureDemo.Tests.csproj --configuration $(buildConfiguration) --filter Category=Unit --logger trx --no-build
+    dotnet publish --configuration $(buildConfiguration) --output $BUILD_ARTIFACTSTAGINGDIRECTORY --no-build
 
-- script: dotnet build --configuration $(buildConfiguration) --no-restore
-  displayName: 'Build'
-
-- task: DotNetCoreCLI@2
-  displayName: 'Run Unit Tests'
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
   inputs:
-    command: test
-    projects: '**/*Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --filter Category=Unit --no-build'
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+
+- task: PublishBuildArtifacts@1
+
+- task: AzureRmWebAppDeployment@3
+  inputs:
+    azureSubscription: 'e4a1b775-a4c2-4daf-920f-9c4c85ffe9e4'
+    WebAppName: 'azureDemo12944'
+    DeployToSlotFlag: true
+    ResourceGroupName: 'AzureDemo'
+    SlotName: staging
+
+- task: AzureAppServiceManage@0
+  inputs:
+    azureSubscription: 'e4a1b775-a4c2-4daf-920f-9c4c85ffe9e4'
+    WebAppName: 'azureDemo12944'
+    ResourceGroupName: 'AzureDemo'
+    SourceSlot: staging
