@@ -37,5 +37,8 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --no-build'
     zipAfterPublish: True
 
+- script: dotnet publish AzureDemo.Tests/AzureDemo.Tests.csproj --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --no-build
+  displayName: 'Publish Test Files'
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifacts'
