@@ -19,9 +19,9 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration) --no-restore
   displayName: 'Build'
 
-- script: dotnet test AzureDemo.Tests/AzureDemo.Tests.csproj --filter Category=Unit --logger trx
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
+- task: DotNetCoreCLI@2
+  displayName: 'Run Unit Tests'
   inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
+    command: test
+    projects: '**/*Tests/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --filter Category=Unit'
