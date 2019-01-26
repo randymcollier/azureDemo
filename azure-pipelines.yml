@@ -13,16 +13,24 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: |
-    dotnet restore
-    dotnet build --configuration $(buildConfiguration) --no-restore
-    dotnet test AzureDemo.Tests/AzureDemo.Tests.csproj --configuration $(buildConfiguration) --filter Category=Unit --logger trx --no-build
-    dotnet publish --configuration $(buildConfiguration) --output $BUILD_ARTIFACTSTAGINGDIRECTORY --no-build
+-script: dotnet restore
+  displayName: 'Restore'
+
+-script: dotnet build --configuration $(buildConfiguration) --no-restore
+  displayName: 'Build'
+
+-script: dotnet test AzureDemo.Tests/AzureDemo.Tests.csproj --configuration $(buildConfiguration) --filter Category=Unit --logger trx --no-build
+  displayName: 'Unit Tests'
+
+-script: dotnet publish --configuration $(buildConfiguration) --output $BUILD_ARTIFACTSTAGINGDIRECTORY --no-build
+  displayName: 'Generate Artifacts'
 
 - task: PublishTestResults@2
+  displayName: 'Publish Test Results'
   condition: succeededOrFailed()
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
 
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifacts'
