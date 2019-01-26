@@ -13,6 +13,12 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: DotNetCoreInstaller@0
+  displayName: 'Install DotNet Core 2.2.103'
+  inputs:
+    packageType: 'sdk'
+    version: '2.2.103'
+
 - script: dotnet restore
   displayName: 'Restore'
 
@@ -21,6 +27,9 @@ steps:
 
 - script: dotnet test AzureDemo.Tests/AzureDemo.Tests.csproj --configuration $(buildConfiguration) --filter Category=Unit --logger trx --no-build
   displayName: 'Unit Tests'
+
+- script: dotnet test AzureDemo.Tests/AzureDemo.Tests.csproj --configuration $(buildConfiguration) --filter Category=Integration --logger trx --no-build
+  displayName: 'Integration Tests'
 
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
