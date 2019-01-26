@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AzureDemo.Domain\AzureDemo.Domain.csproj" />
+    <ProjectReference Include="..\AzureDemo.Api\AzureDemo.Api.csproj" />
   </ItemGroup>
 
 </Project>
