@@ -22,9 +22,6 @@ steps:
 - script: dotnet test AzureDemo.Tests/AzureDemo.Tests.csproj --configuration $(buildConfiguration) --filter Category=Unit --logger trx --no-build
   displayName: 'Unit Tests'
 
-- script: dotnet publish --configuration $(buildConfiguration) --output $BUILD_ARTIFACTSTAGINGDIRECTORY --no-build
-  displayName: 'Generate Artifacts'
-
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
   condition: succeededOrFailed()
@@ -32,5 +29,10 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
 
-- task: PublishBuildArtifacts@1
+- task: DotNetCoreCLI@2
   displayName: 'Publish Artifacts'
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --no-build'
+    zipAfterPublish: True
