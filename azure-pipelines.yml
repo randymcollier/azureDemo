@@ -14,10 +14,10 @@ variables:
 
 steps:
 - task: DotNetCoreInstaller@0
-  displayName: 'Install DotNet Core 2.2.1'
+  displayName: 'Install DotNet Core 2.2.103'
   inputs:
     packageType: 'sdk'
-    version: '2.2.1'
+    version: '2.2.103'
 
 - script: dotnet restore
   displayName: 'Restore'
