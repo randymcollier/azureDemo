@@ -12,7 +12,7 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-ssteps:
+steps:
 - script: |
     dotnet restore
     dotnet build --configuration $(buildConfiguration) --no-restore
