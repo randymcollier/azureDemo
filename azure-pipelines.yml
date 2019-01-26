@@ -26,18 +26,3 @@ steps:
     testResultsFiles: '**/*.trx'
 
 - task: PublishBuildArtifacts@1
-
-- task: AzureRmWebAppDeployment@3
-  inputs:
-    azureSubscription: 'e4a1b775-a4c2-4daf-920f-9c4c85ffe9e4'
-    WebAppName: 'azureDemo12944'
-    DeployToSlotFlag: true
-    ResourceGroupName: 'AzureDemo'
-    SlotName: staging
-
-- task: AzureAppServiceManage@0
-  inputs:
-    azureSubscription: 'e4a1b775-a4c2-4daf-920f-9c4c85ffe9e4'
-    WebAppName: 'azureDemo12944'
-    ResourceGroupName: 'AzureDemo'
-    SourceSlot: staging
