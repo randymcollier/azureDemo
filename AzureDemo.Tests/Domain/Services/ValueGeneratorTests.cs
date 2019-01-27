@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using AzureDemo.Domain.Services;
-using Xunit;
+using NUnit.Framework;
 
 namespace AzureDemo.Tests.Domain.Services
 {
-    [Trait("Category", "Unit")]
+    [TestFixture, Category("Unit")]
     public class ValueGeneratorTests
     {
         ValueGenerator _valueGenerator;
@@ -14,7 +14,7 @@ namespace AzureDemo.Tests.Domain.Services
             _valueGenerator = new ValueGenerator();
         }
 
-        [Fact]
+        [Test]
         public async Task ValueGenerator_GetValue_ReturnsValueAndNumberPassedIn()
         {
             // Arrange
@@ -26,17 +26,17 @@ namespace AzureDemo.Tests.Domain.Services
             actual = await _valueGenerator.GetValue(input).ConfigureAwait(false);
 
             // Assert
-            Assert.Equal(expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
-        [Fact]
+        [Test]
         public async Task ValueGenerator_GetValues_ReturnsMultipleValues()
         {
             // Arrange & Act
             var result = await _valueGenerator.GetValues().ConfigureAwait(false);
 
             // Assert
-            Assert.NotEmpty(result);
+            Assert.IsNotEmpty(result);
         }
     }
 }
