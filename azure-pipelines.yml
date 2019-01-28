@@ -50,9 +50,7 @@ steps:
   displayName: 'Copy Test Files'
   inputs:
     contents: |
-        AzureDemo.*/**/bin/$(BuildConfiguration)/*.dll
-        AzureDemo.*/**/bin/$(BuildConfiguration)/*.pdb
-        AzureDemo.*/**/bin/$(BuildConfiguration)/*.json
+        AzureDemo.Tests/bin/$(BuildConfiguration)/**/?(*.dll|*.pdb|*.json)
     targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
