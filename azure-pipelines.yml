@@ -49,8 +49,9 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Test Files'
   inputs:
-    Contents: '**\?(*.dll|*.pdb|*.json)'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    sourceFolder: '$(Build.SourcesDirectory)'
+    contents: **\bin\**\?(*.dll|*.pdb|*.json)
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifacts'
