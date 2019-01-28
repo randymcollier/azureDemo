@@ -1,27 +1,37 @@
 namespace AzureDemo.Tests.Utilities
 {
+    public enum Environment
+    {
+        Local,
+        Staging,
+        Production
+    }
+
     public static class EnvironmentHelper
     {
-        private enum Environment
-        {
-            Local,
-            Staging,
-            Production
-        }
+        private static Environment? _environment;
 
-        private static Environment GetEnvironment(string input)
+        public static Environment GetEnvironment(string input)
         {
+            if (_environment.HasValue) return _environment.Value;
+
             switch (input)
             {
                 case ("local"):
-                    return Environment.Local;
+                    _environment = Environment.Local;
+                    break;
                 case ("staging"):
-                    return Environment.Staging;
+                    _environment = Environment.Staging;
+                    break;
                 case ("production"):
-                    return Environment.Production;
+                    _environment = Environment.Production;
+                    break;
                 default:
-                    return Environment.Local;
+                    _environment = Environment.Local;
+                    break;
             }
+            
+            return _environment.Value;
         }
 
         public static string GetBaseUrl(string input)
@@ -30,13 +40,29 @@ namespace AzureDemo.Tests.Utilities
             switch (env)
             {
                 case (Environment.Local):
-                    return "http://localhost";
+                    return "http://localhost/";
                 case (Environment.Staging):
-                    return "https://azuredemoapi13454-staging.azurewebsites.net";
+                    return "https://azuredemoapi13454-stagin.azurewebsites.net/";
                 case (Environment.Production):
-                    return "https://azuredemoapi13454.azurewebsites.net";
+                    return "https://azuredemoapi13454.azurewebsites.net/";
                 default:
-                    return "http://localhost";
+                    return "http://localhost/";
+
+            }
+        }
+
+        public static string GetBaseUrl(Environment input)
+        {
+            switch (input)
+            {
+                case (Environment.Local):
+                    return "http://localhost/";
+                case (Environment.Staging):
+                    return "https://azuredemoapi13454-staging.azurewebsites.net/";
+                case (Environment.Production):
+                    return "https://azuredemoapi13454.azurewebsites.net/";
+                default:
+                    return "http://localhost/";
 
             }
         }

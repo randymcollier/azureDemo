@@ -1,4 +1,5 @@
 using AzureDemo.Tests.Utilities;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace AzureDemo.Tests.Api
@@ -7,14 +8,17 @@ namespace AzureDemo.Tests.Api
     public class ApiTestBase
     {
         protected ApiWebApplicationFactory _factory;
-        private string _baseUrl;
+        private Environment _environment;
 
         [OneTimeSetUp]
         public void Setup()
         {
-            var env = TestContext.Parameters["Environment"];
-            _baseUrl = EnvironmentHelper.GetBaseUrl(env);
-            _factory = new ApiWebApplicationFactory(_baseUrl);
+            var config = new ConfigurationBuilder()
+                                .AddJsonFile("testsettings.json")
+                                .Build();
+            var env = config["Environment"];
+            _environment = EnvironmentHelper.GetEnvironment(env);
+            _factory = new ApiWebApplicationFactory(_environment);
         }
 
         [OneTimeTearDown]

@@ -17,7 +17,7 @@ namespace AzureDemo.Tests.Api
             using (var http = _factory.GetHttpClient())
             {
                 // Act
-                var response = await http.GetAsync("/api/values/5").ConfigureAwait(false);
+                var response = await http.GetAsync("api/values/5").ConfigureAwait(false);
 
                 // Assert
                 Assert.True(response.IsSuccessStatusCode);
@@ -31,7 +31,7 @@ namespace AzureDemo.Tests.Api
             using (var http = _factory.GetHttpClient())
             {
                 // Act
-                var response = await http.GetAsync("/api/values/5").ConfigureAwait(false);
+                var response = await http.GetAsync("api/values/5").ConfigureAwait(false);
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 // Assert
@@ -46,7 +46,7 @@ namespace AzureDemo.Tests.Api
             using (var http = _factory.GetHttpClient())
             {
                 // Act
-                var response = await http.GetAsync("/api/values").ConfigureAwait(false);
+                var response = await http.GetAsync("api/values").ConfigureAwait(false);
 
                 // Assert
                 Assert.True(response.IsSuccessStatusCode);
@@ -60,7 +60,7 @@ namespace AzureDemo.Tests.Api
             using (var http = _factory.GetHttpClient())
             {
                 // Act
-                var response = await http.GetAsync("/api/values").ConfigureAwait(false);
+                var response = await http.GetAsync("api/values").ConfigureAwait(false);
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var result = JsonConvert.DeserializeObject<IEnumerable<string>>(content);
 
