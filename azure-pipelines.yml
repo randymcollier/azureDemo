@@ -49,9 +49,11 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Test Files'
   inputs:
-    sourceFolder: '$(Build.SourcesDirectory)'
-    contents: '**\bin\**\?(*.dll|*.pdb|*.json)'
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    contents: |
+        AzureDemo.*/**/bin/$(BuildConfiguration)/*.dll
+        AzureDemo.*/**/bin/$(BuildConfiguration)/*.pdb
+        AzureDemo.*/**/bin/$(BuildConfiguration)/*.json
+    targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifacts'
