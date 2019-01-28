@@ -19,6 +19,10 @@
   <ItemGroup>
     <ProjectReference Include="..\AzureDemo.Domain\AzureDemo.Domain.csproj" />
     <ProjectReference Include="..\AzureDemo.Api\AzureDemo.Api.csproj" />
+
+     <Content Include="*.runsettings">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content> 
   </ItemGroup>
 
 </Project>
