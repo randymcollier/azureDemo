@@ -8,27 +8,13 @@ using AzureDemo.Api;
 namespace AzureDemo.Tests.Api
 {
     [TestFixture, Category("Integration")]
-    public class ValuesControllerTests
+    public class ValuesControllerTests : ApiTestBase
     {
-        private ApiWebApplicationFactory _factory;
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            _factory = new ApiWebApplicationFactory();
-        }
-
-        [OneTimeTearDown]
-        public void Cleanup()
-        {
-            _factory.Dispose();
-        }
-
         [Test]
         public async Task ValuesController_GetSpecificValue_Returns200()
         {
             // Arrange
-            using (var http = _factory.CreateClient())
+            using (var http = _factory.GetHttpClient())
             {
                 // Act
                 var response = await http.GetAsync("/api/values/5").ConfigureAwait(false);
@@ -42,7 +28,7 @@ namespace AzureDemo.Tests.Api
         public async Task ValuesController_GetSpecificValue_ReturnsString()
         {
             // Arrange
-            using (var http = _factory.CreateClient())
+            using (var http = _factory.GetHttpClient())
             {
                 // Act
                 var response = await http.GetAsync("/api/values/5").ConfigureAwait(false);
@@ -57,7 +43,7 @@ namespace AzureDemo.Tests.Api
         public async Task ValuesController_GetValues_Returns200()
         {
             // Arrange
-            using (var http = _factory.CreateClient())
+            using (var http = _factory.GetHttpClient())
             {
                 // Act
                 var response = await http.GetAsync("/api/values").ConfigureAwait(false);
@@ -71,7 +57,7 @@ namespace AzureDemo.Tests.Api
         public async Task ValuesController_GetValues_ReturnsListOfStrings()
         {
             // Arrange
-            using (var http = _factory.CreateClient())
+            using (var http = _factory.GetHttpClient())
             {
                 // Act
                 var response = await http.GetAsync("/api/values").ConfigureAwait(false);
