@@ -42,15 +42,15 @@ steps:
   displayName: 'Generate Artifacts'
   inputs:
     command: publish
-    publishWebProjects: True
+    publishWebProjects: true
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --no-build'
-    zipAfterPublish: True
+    zipAfterPublish: true
 
 - task: CopyFiles@2
   displayName: 'Copy Test Files'
   inputs:
     sourceFolder: '$(Build.SourcesDirectory)'
-    contents: **\bin\**\?(*.dll|*.pdb|*.json)
+    contents: '**\bin\**\?(*.dll|*.pdb|*.json)'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
