@@ -1,24 +1,30 @@
 using System.Net.Http;
 using System.Threading.Tasks;
-using Xunit;
+using NUnit.Framework;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.Testing;
 using AzureDemo.Api;
 
 namespace AzureDemo.Tests.Api
 {
-    [Trait("Category", "Integration")]
-    public class ValuesControllerTests : IClassFixture<WebApplicationFactory<Startup>>
+    [TestFixture, Category("Integration")]
+    public class ValuesControllerTests
     {
-        private readonly WebApplicationFactory<Startup> _factory;
+        private ApiWebApplicationFactory _factory;
 
-        public ValuesControllerTests(WebApplicationFactory<Startup> factory)
+        [OneTimeSetUp]
+        public void Setup()
         {
-            _factory = factory;
+            _factory = new ApiWebApplicationFactory();
         }
 
-        [Fact]
+        [OneTimeTearDown]
+        public void Cleanup()
+        {
+            _factory.Dispose();
+        }
+
+        [Test]
         public async Task ValuesController_GetSpecificValue_Returns200()
         {
             // Arrange
@@ -32,7 +38,7 @@ namespace AzureDemo.Tests.Api
             }
         }
 
-        [Fact]
+        [Test]
         public async Task ValuesController_GetSpecificValue_ReturnsString()
         {
             // Arrange
@@ -47,7 +53,7 @@ namespace AzureDemo.Tests.Api
             }
         }
 
-        [Fact]
+        [Test]
         public async Task ValuesController_GetValues_Returns200()
         {
             // Arrange
@@ -61,7 +67,7 @@ namespace AzureDemo.Tests.Api
             }
         }
 
-        [Fact]
+        [Test]
         public async Task ValuesController_GetValues_ReturnsListOfStrings()
         {
             // Arrange
@@ -74,7 +80,7 @@ namespace AzureDemo.Tests.Api
 
                 // Assert
                 Assert.NotNull(result);
-                Assert.NotEmpty(result);
+                Assert.IsNotEmpty(result);
             }
         }
     }
