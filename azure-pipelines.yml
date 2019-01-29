@@ -46,12 +46,5 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --no-build'
     zipAfterPublish: true
 
-- task: CopyFiles@2
-  displayName: 'Copy Test Files'
-  inputs:
-    contents: |
-        AzureDemo.Tests/bin/$(BuildConfiguration)/**/?(*.dll|*.pdb|*.json)
-    targetFolder: $(Build.ArtifactStagingDirectory)
-
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifacts'

@@ -8,16 +8,30 @@ using AzureDemo.Api;
 namespace AzureDemo.Tests.Api
 {
     [TestFixture, Category("Integration")]
-    public class ValuesControllerTests : ApiTestBase
+    public class ValuesControllerTests
     {
+        private ApiWebApplicationFactory _factory { get; set; }
+
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            _factory = new ApiWebApplicationFactory();
+        }
+
+        [OneTimeTearDown]
+        public void Cleanup()
+        {
+            _factory?.Dispose();
+        }
+
         [Test]
         public async Task ValuesController_GetSpecificValue_Returns200()
         {
             // Arrange
-            using (var http = _factory.GetHttpClient())
+            using (var http = _factory.CreateClient())
             {
                 // Act
-                var response = await http.GetAsync("api/values/5").ConfigureAwait(false);
+                var response = await http.GetAsync("/api/values/5").ConfigureAwait(false);
 
                 // Assert
                 Assert.True(response.IsSuccessStatusCode);
@@ -28,10 +42,10 @@ namespace AzureDemo.Tests.Api
         public async Task ValuesController_GetSpecificValue_ReturnsString()
         {
             // Arrange
-            using (var http = _factory.GetHttpClient())
+            using (var http = _factory.CreateClient())
             {
                 // Act
-                var response = await http.GetAsync("api/values/5").ConfigureAwait(false);
+                var response = await http.GetAsync("/api/values/5").ConfigureAwait(false);
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 // Assert
@@ -43,10 +57,10 @@ namespace AzureDemo.Tests.Api
         public async Task ValuesController_GetValues_Returns200()
         {
             // Arrange
-            using (var http = _factory.GetHttpClient())
+            using (var http = _factory.CreateClient())
             {
                 // Act
-                var response = await http.GetAsync("api/values").ConfigureAwait(false);
+                var response = await http.GetAsync("/api/values").ConfigureAwait(false);
 
                 // Assert
                 Assert.True(response.IsSuccessStatusCode);
@@ -57,10 +71,10 @@ namespace AzureDemo.Tests.Api
         public async Task ValuesController_GetValues_ReturnsListOfStrings()
         {
             // Arrange
-            using (var http = _factory.GetHttpClient())
+            using (var http = _factory.CreateClient())
             {
                 // Act
-                var response = await http.GetAsync("api/values").ConfigureAwait(false);
+                var response = await http.GetAsync("/api/values").ConfigureAwait(false);
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var result = JsonConvert.DeserializeObject<IEnumerable<string>>(content);
 

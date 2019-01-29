@@ -10,7 +10,6 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <PackageReference Include="newtonsoft.json" Version="12.0.1" />
     <PackageReference Include="nunit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
@@ -20,10 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="..\AzureDemo.Domain\AzureDemo.Domain.csproj" />
     <ProjectReference Include="..\AzureDemo.Api\AzureDemo.Api.csproj" />
-
-     <Content Include="testsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content> 
   </ItemGroup>
 
 </Project>
