@@ -7,81 +7,50 @@ using AzureDemo.Api;
 
 namespace AzureDemo.Tests.Api
 {
-    [TestFixture, Category("Integration")]
-    public class ValuesControllerTests
+    public class ValuesControllerTests : ApiBaseTest
     {
-        private ApiWebApplicationFactory _factory { get; set; }
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            _factory = new ApiWebApplicationFactory();
-        }
-
-        [OneTimeTearDown]
-        public void Cleanup()
-        {
-            _factory?.Dispose();
-        }
-
         [Test]
         public async Task ValuesController_GetSpecificValue_Returns200()
         {
-            // Arrange
-            using (var http = _factory.CreateClient())
-            {
-                // Act
-                var response = await http.GetAsync("/api/values/5").ConfigureAwait(false);
+            // Act
+            var response = await _httpClient.GetAsync("/api/values/5").ConfigureAwait(false);
 
-                // Assert
-                Assert.True(response.IsSuccessStatusCode);
-            }
+            // Assert
+            Assert.True(response.IsSuccessStatusCode);
         }
 
         [Test]
         public async Task ValuesController_GetSpecificValue_ReturnsString()
         {
-            // Arrange
-            using (var http = _factory.CreateClient())
-            {
-                // Act
-                var response = await http.GetAsync("/api/values/5").ConfigureAwait(false);
-                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            // Act
+            var response = await _httpClient.GetAsync("/api/values/5").ConfigureAwait(false);
+            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                // Assert
-                Assert.NotNull(content);
-            }
+            // Assert
+            Assert.NotNull(content);
         }
 
         [Test]
         public async Task ValuesController_GetValues_Returns200()
         {
-            // Arrange
-            using (var http = _factory.CreateClient())
-            {
-                // Act
-                var response = await http.GetAsync("/api/values").ConfigureAwait(false);
+            // Act
+            var response = await _httpClient.GetAsync("/api/values").ConfigureAwait(false);
 
-                // Assert
-                Assert.True(response.IsSuccessStatusCode);
-            }
+            // Assert
+            Assert.True(response.IsSuccessStatusCode);
         }
 
         [Test]
         public async Task ValuesController_GetValues_ReturnsListOfStrings()
         {
-            // Arrange
-            using (var http = _factory.CreateClient())
-            {
-                // Act
-                var response = await http.GetAsync("/api/values").ConfigureAwait(false);
-                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var result = JsonConvert.DeserializeObject<IEnumerable<string>>(content);
+            // Act
+            var response = await _httpClient.GetAsync("/api/values").ConfigureAwait(false);
+            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var result = JsonConvert.DeserializeObject<IEnumerable<string>>(content);
 
-                // Assert
-                Assert.NotNull(result);
-                Assert.IsNotEmpty(result);
-            }
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsNotEmpty(result);
         }
     }
 }
