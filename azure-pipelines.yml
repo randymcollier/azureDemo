@@ -7,6 +7,10 @@ trigger:
 - master
 - development
 
+pr:
+- master
+- development
+
 pool:
   vmImage: 'Ubuntu-16.04'
 
